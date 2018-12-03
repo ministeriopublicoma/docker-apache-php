@@ -1,1 +1,2 @@
-# Docker Image for PHP5-FPM
+# Docker Image for Apache + PHP
+

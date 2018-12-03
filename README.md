@@ -1,2 +1,1 @@
-# docker-apache-php
-Dockerfile for Apache + PHP
+# Docker Image for PHP5-FPM

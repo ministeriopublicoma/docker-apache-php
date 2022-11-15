@@ -1,5 +1,5 @@
-FROM php:7.4.33-apache-bullseye
-MAINTAINER Ricardo Coelho <rcoelho@mpma.mp.br>
+FROM php:8.1.12-apache-bullseye
+LABEL maintainer="Ricardo Coelho <rcoelho@mpma.mp.br>"
 
 COPY assets/oracle /opt/oracle/
 COPY assets/php.ini /usr/local/etc/php/
@@ -37,7 +37,7 @@ RUN apt-get update \
     && docker-php-ext-install bcmath \
     && yes "no" | pecl install -f -o lzf \
     && yes "yes" | pecl install -f -o igbinary msgpack redis \
-    && pecl install -f -o --onlyreqdeps --nobuild memcached-3.1.3 \
+    && pecl install -f -o --onlyreqdeps --nobuild memcached-3.1.4 \
     && cd "$(pecl config-get temp_dir)/memcached" \
     && phpize \ 
     && ./configure --with-php-config=/usr/local/bin/php-config --with-libmemcached-dir --with-zlib-dir --with-system-fastlz=no --enable-memcached-igbinary=yes --enable-memcached-msgpack=yes --enable-memcached-json=yes --enable-memcached-protocol=no --enable-memcached-sasl=yes --enable-memcached-session=yes \
@@ -50,7 +50,7 @@ RUN apt-get update \
     && ln /opt/oracle/instantclient_12_2/libocci.so.12.1 /opt/oracle/instantclient_12_2/libocci.so \
     && echo "/opt/oracle/instantclient_12_2" > /etc/ld.so.conf.d/oracle-instantclient.conf \
     && ldconfig \
-    && echo "instantclient,/opt/oracle/instantclient_12_2" | pecl install oci8-2.2.0 \
+    && echo "instantclient,/opt/oracle/instantclient_12_2" | pecl install oci8 \
     && docker-php-ext-configure pdo_oci \
        --with-pdo-oci=instantclient,/opt/oracle/instantclient_12_2,12.2 \
     && docker-php-ext-install pdo_oci \
